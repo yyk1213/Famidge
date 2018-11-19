@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:text="가족 to do list"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="170dp"
-        tools:layout_editor_absoluteY="317dp" />
+        tools:layout_editor_absoluteX="191dp"
+        tools:layout_editor_absoluteY="376dp" />
 
 </android.support.constraint.ConstraintLayout>
