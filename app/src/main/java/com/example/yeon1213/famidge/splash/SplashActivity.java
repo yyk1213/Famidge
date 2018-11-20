@@ -38,6 +38,6 @@ public class SplashActivity extends AppCompatActivity implements ActivityHandler
                     startActivity(new Intent(SplashActivity.this,LoginActivity.class));
                 }
             }
-        }, 3000);
+        }, 2000);
     }
 }

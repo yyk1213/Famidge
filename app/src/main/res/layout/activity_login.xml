@@ -4,6 +4,100 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".logIn.LoginActivity">
+
+    <TextView
+        android:id="@+id/login_logo1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="189dp"
+        android:layout_marginTop="121dp"
+        android:text="@string/app_name"
+        android:textColor="@color/colorAccent"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toTopOf="@+id/login_text_signUp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/login_logo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="231dp"
+        android:text="가족 To do list"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/login_logo1"
+        app:layout_constraintTop_toBottomOf="@+id/login_logo1"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/login_editText_id"
+        android:layout_width="195dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="260dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:hint="아이디"
+        app:layout_constraintBottom_toTopOf="@+id/login_editText_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <EditText
+        android:id="@+id/login_editText_password"
+        android:layout_width="195dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="비밀번호"
+        app:layout_constraintBottom_toTopOf="@+id/login_btn_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_editText_id" />
+
+    <Button
+        android:id="@+id/login_btn_login"
+        android:layout_width="70dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="151dp"
+        android:layout_marginEnd="94dp"
+        android:layout_marginRight="94dp"
+        android:text="로그인"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/login_text_findID"
+        app:layout_constraintTop_toBottomOf="@+id/login_editText_password" />
+
+    <TextView
+        android:id="@+id/login_text_signUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="회원가입"
+        app:layout_constraintBottom_toTopOf="@+id/login_text_findID"
+        app:layout_constraintStart_toStartOf="@+id/login_text_findID"
+        app:layout_constraintTop_toBottomOf="@+id/login_logo1" />
+
+    <TextView
+        android:id="@+id/login_text_findID"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="151dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginLeft="95dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginStart="95dp"
+        android:text="아이디/비밀번호 찾기"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/login_btn_login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_text_signUp" />
+
 
 </android.support.constraint.ConstraintLayout>
