@@ -1,5 +1,7 @@
 package com.example.yeon1213.famidge.logIn;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.yeon1213.famidge.R;
 import com.example.yeon1213.famidge.database.Database;
+import com.example.yeon1213.famidge.main.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -70,31 +73,50 @@ public class LoginActivity extends AppCompatActivity implements Button.OnClickLi
         tvSingUp = findViewById(R.id.login_text_signUp);
         tvFindID = findViewById(R.id.login_text_findID);
     }
-
-    private void checkRoomPassword(FirebaseUser user){
+    //db에서 user의 방 비밀번호를 가져온다.
+    private void checkRoomPassword(FirebaseUser user) {
 
         Database.getInstance().collection("users")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            for(QueryDocumentSnapshot documentSnapshot:task.getResult()){
-                                    showPasswordDialog(documentSnapshot.get("roomName").toString(), documentSnapshot.get("roomName").toString());
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                showPasswordDialog(documentSnapshot.get("roomName").toString(), documentSnapshot.get("roomName").toString());
                             }
-                        }else{
+                        } else {
 
                         }
                     }
-                })
+                });
     }
-    //가족방을 db에서 가져와야한다.
-    private void showPasswordDialog(String roomName, String roomPassword){
 
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+    private void showPasswordDialog(String roomName, final String roomPassword) {
 
-        LayoutInflater inflater=this.getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.dialog_password_layout,null))
-                .setMessage(roomName+" 비밀번호를 입렵하세요.")
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_password_layout, null);
+        TextView tvRoomName = dialogView.findViewById(R.id.room_password_roomName);
+        final EditText etRoomPassword = dialogView.findViewById(R.id.room_password);
+
+        tvRoomName.setText(roomName + " 비밀번호를 입력해주세요");
+
+        builder.setView(dialogView)
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //비밀번호 일치여부 확인
+                        //일치하면 메인으로
+                        if (etRoomPassword.getText().equals(roomPassword)) {
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        } else {
+                            Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }).create();
+
+        builder.show();
+    }
 }
