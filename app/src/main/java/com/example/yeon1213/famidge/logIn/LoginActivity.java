@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.yeon1213.famidge.R;
 import com.example.yeon1213.famidge.database.Database;
 import com.example.yeon1213.famidge.main.MainActivity;
+import com.example.yeon1213.famidge.signUp.SignUpActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -46,24 +47,36 @@ public class LoginActivity extends AppCompatActivity implements Button.OnClickLi
 
     @Override
     public void onClick(View v) {
-        mID = etID.getText().toString();
-        mPassword = etPassword.getText().toString();
 
-        mAuth = FirebaseAuth.getInstance();
+        int id = v.getId();
 
-        mAuth.signInWithEmailAndPassword(mID, mPassword)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            //확인하기
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            checkRoomPassword(user);
-                        } else {
-                            Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+        switch (id) {
+            case R.id.login_btn_login:
+                mID = etID.getText().toString();
+                mPassword = etPassword.getText().toString();
+
+                mAuth = FirebaseAuth.getInstance();
+
+                mAuth.signInWithEmailAndPassword(mID, mPassword)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    //확인하기
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    checkRoomPassword(user);
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                break;
+            case R.id.login_text_signUp:
+                startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+                break;
+            case R.id.login_text_findID:
+                break;
+        }
     }
 
     private void initView() {
@@ -72,7 +85,12 @@ public class LoginActivity extends AppCompatActivity implements Button.OnClickLi
         btnLogin = findViewById(R.id.login_btn_login);
         tvSingUp = findViewById(R.id.login_text_signUp);
         tvFindID = findViewById(R.id.login_text_findID);
+
+        btnLogin.setOnClickListener(this);
+        tvSingUp.setOnClickListener(this);
+        tvFindID.setOnClickListener(this);
     }
+
     //db에서 user의 방 비밀번호를 가져온다.
     private void checkRoomPassword(FirebaseUser user) {
 
