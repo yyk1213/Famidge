@@ -36,7 +36,7 @@ public class SignUpActivity extends AppCompatActivity implements Button.OnClickL
     private String mNewID;
     private String mNewPassword;
     private String mRoom;
-    private Map<String, Object> mUserData;
+    private Map<String, Object> mUserData = new HashMap<>();
     private FirebaseUser mUser;
     private FirebaseAuth mAuth;
 
@@ -69,14 +69,12 @@ public class SignUpActivity extends AppCompatActivity implements Button.OnClickL
             mRoom = etFamilyRoom.getText().toString();
 
             signUp();
-            saveData();
         }
     }
 
     private void signUp() {
 
         mAuth = FirebaseAuth.getInstance();
-        mUserData = new HashMap<>();
 
         mAuth.createUserWithEmailAndPassword(mNewID, mNewPassword)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -88,11 +86,15 @@ public class SignUpActivity extends AppCompatActivity implements Button.OnClickL
                             mUserData.put("Room", mRoom);
 
                             mUser = mAuth.getCurrentUser();
+
+                            saveData();
                         } else {
                             Log.e(TAG, "회원가입 실패");
+                            Toast.makeText(SignUpActivity.this, "회원가입 실패", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+
     }
 
     private void saveData() {
@@ -100,7 +102,7 @@ public class SignUpActivity extends AppCompatActivity implements Button.OnClickL
         FirebaseFirestore DB = FirebaseFirestore.getInstance();
 
         DB.collection("users")
-                 .add(mUserData)
+                .add(mUserData)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -112,7 +114,7 @@ public class SignUpActivity extends AppCompatActivity implements Button.OnClickL
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "데이터 저장 실패");
+                        Log.e(TAG, e.toString());
                     }
                 });
     }
