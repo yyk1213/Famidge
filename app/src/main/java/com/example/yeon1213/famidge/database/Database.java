@@ -10,6 +10,6 @@ public class Database {
         if(mDB ==null){
             mDB=FirebaseFirestore.getInstance();
         }
-        return mDB;
+        return mDB;//
     }
 }
